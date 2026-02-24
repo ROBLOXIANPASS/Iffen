@@ -3,8 +3,28 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RobuxStore</title>
-    <link rel="stylesheet" href="style.css">
+    <title>RobuxStore | Premium</title>
+    <style>
+        :root { --main: #00c3ff; --bg: #0a0a0c; --card: #16161d; --text: #ffffff; }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: sans-serif; }
+        body { background: var(--bg); color: var(--text); display: flex; justify-content: center; padding: 20px; }
+        .blur { filter: blur(10px); pointer-events: none; }
+        .modal-overlay { position: fixed; top:0; left:0; width:100%; height:100%; background: rgba(0,0,0,0.95); z-index: 100; display: flex; align-items: center; justify-content: center; }
+        .modal-box { background: var(--card); padding: 30px; border-radius: 20px; width: 90%; max-width: 400px; border: 1px solid var(--main); text-align: center; }
+        .modal-box h2 { margin-bottom: 15px; color: var(--main); }
+        .modal-box p { font-size: 0.9rem; color: #ccc; margin-bottom: 10px; text-align: left; }
+        .check-area { margin: 20px 0; font-size: 0.8rem; display: flex; gap: 10px; align-items: center; justify-content: center; }
+        .container { width: 100%; max-width: 400px; }
+        .card { background: var(--card); padding: 25px; border-radius: 20px; border: 1px solid #2d2d3a; }
+        label { display: block; font-size: 0.75rem; color: #777; margin: 15px 0 5px; font-weight: bold; text-transform: uppercase; }
+        input { width: 100%; padding: 14px; border-radius: 10px; border: 1px solid #2d2d3a; background: #000; color: #fff; margin-bottom: 5px; }
+        .profile-preview { display: flex; flex-direction: column; align-items: center; margin-bottom: 20px; }
+        #userPhoto { width: 80px; height: 80px; border-radius: 50%; border: 3px solid var(--main); margin-bottom: 10px; }
+        .resumo { background: #000; padding: 20px; border-radius: 15px; text-align: center; margin: 25px 0; border: 1px dashed var(--main); }
+        #robuxQtde { color: var(--main); font-size: 1.8rem; font-weight: 900; display: block; margin: 5px 0; }
+        button { width: 100%; padding: 18px; border-radius: 12px; border: none; font-weight: bold; cursor: pointer; background: var(--main); color: #fff; }
+        button:disabled { opacity: 0.2; cursor: not-allowed; }
+    </style>
 </head>
 <body>
 
@@ -28,24 +48,75 @@
                 <img src="" id="userPhoto">
                 <span style="font-size:0.7rem; color:#00c3ff;">JOGADOR ENCONTRADO</span>
             </div>
-
             <label>Link do Perfil Roblox</label>
-            <input type="text" id="perfil" placeholder="Cole o link do seu perfil">
-
+            <input type="text" id="perfil" placeholder="Cole o link do perfil">
             <label>Valor em R$ (Mínimo 15,00)</label>
             <input type="number" id="valor" placeholder="Ex: 20">
-
             <label>Link da Gamepass</label>
             <input type="text" id="gamepass" placeholder="Link da Gamepass">
-
             <div class="resumo">
-                <span id="textoFinal">VOCÊ RECEBERÁ <span id="robuxQtde">0</span> ROBUX EM SUA CONTA</span>
+                <span>VOCÊ RECEBERÁ <span id="robuxQtde">0</span> ROBUX EM SUA CONTA</span>
             </div>
-
             <button id="btnPagar" disabled>FINALIZAR PEDIDO</button>
         </div>
     </div>
 
-    <script src="script.js"></script>
+    <script>
+        const MAKE_URL = "https://hook.us2.make.com/wiikktnvbhxvvhy93nr723wzsfoty1ax";
+        const RATE = 0.04;
+
+        // Lógica Modal
+        document.getElementById('concordo').onclick = function() {
+            document.getElementById('btnConfirmar').disabled = !this.checked;
+        };
+
+        document.getElementById('btnConfirmar').onclick = function() {
+            document.getElementById('modalRegras').style.display = 'none';
+            document.getElementById('appContent').classList.remove('blur');
+        };
+
+        // Lógica App
+        const perfil = document.getElementById('perfil');
+        const valor = document.getElementById('valor');
+        const gamepass = document.getElementById('gamepass');
+        const robuxQtde = document.getElementById('robuxQtde');
+        const btnPagar = document.getElementById('btnPagar');
+        const userPhoto = document.getElementById('userPhoto');
+        const previewArea = document.getElementById('previewArea');
+
+        perfil.oninput = function() {
+            const match = perfil.value.match(/users\/(\d+)/);
+            if (match) {
+                userPhoto.src = `https://www.roblox.com/headshot-thumbnail/image?userId=${match[1]}&width=150&height=150&format=png`;
+                previewArea.style.display = 'flex';
+            } else { previewArea.style.display = 'none'; }
+            validar();
+        };
+
+        function validar() {
+            const v = parseFloat(valor.value) || 0;
+            const p = perfil.value.includes("roblox.com/users/");
+            const g = gamepass.value.length > 5;
+            if (v > 0) robuxQtde.innerText = Math.floor(v / RATE).toLocaleString();
+            btnPagar.disabled = !(v >= 15 && p && g);
+        }
+
+        valor.oninput = validar;
+        gamepass.oninput = validar;
+
+        btnPagar.onclick = async function() {
+            btnPagar.innerText = "GERANDO PIX...";
+            btnPagar.disabled = true;
+            try {
+                await fetch(MAKE_URL, {
+                    method: "POST",
+                    headers: {"Content-Type": "application/json"},
+                    body: JSON.stringify({user: perfil.value, valor: valor.value, robux: robuxQtde.innerText, gamepass: gamepass.value})
+                });
+            } finally {
+                window.location.href = "https://t.me/LIL7809";
+            }
+        };
+    </script>
 </body>
 </html>
