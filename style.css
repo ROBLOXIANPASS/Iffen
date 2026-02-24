@@ -1,0 +1,56 @@
+:root {
+    --bg: #050507;
+    --card: #0f0f14;
+    --accent: #00c3ff;
+    --green: #00ff88;
+    --text: #ffffff;
+}
+
+body {
+    background-color: var(--bg);
+    color: var(--text);
+    font-family: 'Inter', sans-serif;
+    overflow-x: hidden;
+}
+
+.blur { filter: blur(8px); pointer-events: none; }
+
+/* MODAL STYLES */
+.modal {
+    position: fixed; z-index: 999; left: 0; top: 0; width: 100%; height: 100%;
+    background: rgba(0,0,0,0.9); display: flex; align-items: center; justify-content: center;
+}
+.modal-content {
+    background: var(--card); padding: 30px; border-radius: 20px; width: 90%; max-width: 450px;
+    border: 1px solid var(--accent); box-shadow: 0 0 30px rgba(0, 195, 255, 0.2);
+}
+.steps p { font-size: 0.9rem; margin-bottom: 15px; color: #ccc; }
+.agreement { display: flex; gap: 10px; margin: 20px 0; font-size: 0.8rem; color: #999; }
+#startBtn {
+    width: 100%; padding: 15px; border-radius: 10px; border: none;
+    background: var(--accent); color: #fff; font-weight: bold; cursor: pointer;
+}
+
+/* MAIN APP STYLES */
+.container { width: 100%; max-width: 400px; margin: 40px auto; padding: 0 20px; }
+h1 span { color: var(--accent); }
+.shop-card { background: var(--card); padding: 25px; border-radius: 20px; border: 1px solid #1f1f2e; }
+.input-group { margin-bottom: 15px; }
+label { display: block; font-size: 0.7rem; color: #666; margin-bottom: 5px; font-weight: bold; }
+input {
+    width: 100%; padding: 12px; border-radius: 8px; border: 1px solid #1f1f2e;
+    background: #000; color: #fff; outline: none;
+}
+.display-result {
+    background: #000; padding: 20px; border-radius: 15px; text-align: center; margin-bottom: 20px;
+    border: 1px dashed var(--accent);
+}
+.robux-amount { display: block; font-size: 2.5rem; font-weight: 800; color: var(--accent); }
+.btn-pay {
+    width: 100%; padding: 18px; border-radius: 12px; border: none;
+    background: linear-gradient(90deg, #00c3ff, #0077ff); color: #fff;
+    font-weight: 800; font-size: 1.1rem; cursor: pointer;
+}
+.btn-pay:disabled { opacity: 0.2; }
+
+

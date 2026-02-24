@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RobuxStore | Premium Checkout</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <div id="welcomeModal" class="modal">
+        <div class="modal-content">
+            <h2>🚀 Como funciona a entrega?</h2>
+            <div class="steps">
+                <p><strong>1. Configuração:</strong> Você deve ter uma Gamepass criada no valor exato do pedido.</p>
+                <p><strong>2. Pagamento:</strong> Após o PIX, nosso sistema detecta a compra e realiza a compra da sua Gamepass.</p>
+                <p><strong>3. Prazo:</strong> O Robux ficará "Pendente" no seu saldo Roblox e será liberado pela plataforma em 5 a 7 dias (padrão Roblox).</p>
+            </div>
+            <hr>
+            <div class="agreement">
+                <input type="checkbox" id="agreeCheck">
+                <label for="agreeCheck">Entendi o processo e concordo que não há reembolso após a compra da Gamepass. Em caso de dúvidas, <a href="https://t.me/LIL7809" target="_blank">contate o suporte</a>.</label>
+            </div>
+            <button id="startBtn" disabled>ESTOU DE ACORDO</button>
+        </div>
+    </div>
+
+    <div class="container main-content blur" id="mainApp">
+        <header>
+            <h1>ROBUX<span>PREMIUM</span></h1>
+        </header>
+
+        <main class="shop-card">
+            <div class="profile-preview" id="previewArea">
+                <img src="" id="userPhoto">
+                <p>USUÁRIO IDENTIFICADO</p>
+            </div>
+
+            <div class="input-group">
+                <label>Link do Perfil Roblox</label>
+                <input type="text" id="profileLink" placeholder="https://www.roblox.com/users/...">
+            </div>
+
+            <div class="input-group">
+                <label>Valor (Mínimo R$ 15,00)</label>
+                <input type="number" id="amount" placeholder="Ex: 20">
+            </div>
+
+            <div class="input-group">
+                <label>Link da Gamepass</label>
+                <input type="text" id="gamepassLink" placeholder="Link da sua Gamepass ativa">
+            </div>
+
+            <div class="display-result">
+                <span class="label">VOCÊ RECEBERÁ</span>
+                <span class="robux-amount" id="robuxTotal">0</span>
+                <span class="price-tag">R$ <span id="cashDisplay">0,00</span></span>
+            </div>
+
+            <button id="mainBtn" class="btn-pay" disabled>FINALIZAR PAGAMENTO</button>
+        </main>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
